@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "build": "NODE_ENV=production webpack",
-    "deploty": "npm run build && gh-pages -d public",
+    "deploy": "npm run build && gh-pages -d public",
     "start": "webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
