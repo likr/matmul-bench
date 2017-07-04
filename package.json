@@ -1,0 +1,31 @@
+{
+  "name": "matmul-bench",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "NODE_ENV=production webpack",
+    "deploty": "npm run build && gh-pages -d public",
+    "start": "webpack-dev-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-preset-latest": "^6.24.1",
+    "gh-pages": "^1.0.0",
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.5.0"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.23.0",
+    "emlapack": "file:../emlapack",
+    "linalg-asm": "file:../linalg-asm",
+    "mathjs": "^3.14.1",
+    "ndarray-gemm": "^1.0.0",
+    "ndarray-ops": "^1.2.2",
+    "zeros": "^1.0.0"
+  }
+}

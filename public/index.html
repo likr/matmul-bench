@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>matmul benchmark for JS</title>
+<style>
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+table, td, th {
+  border: 1px solid;
+}
+th {
+  width: 150px;
+}
+td {
+  text-align: right;
+}
+td, th {
+  padding: 8px;
+}
+.running {
+  color: red;
+}
+.done {
+  color: green;
+}
+</style>
+</head>
+<body>
+<h1>MatMul Benchmark</h1>
+<div>
+  <p><span class="n">n</span> x <span class="n">n</span> matrix multiplication benchmark</p>
+  <p><a href="https://github.com/likr/matmul-bench">view source</a></p>
+  <button id="start-button">start</button>
+</div>
+<div>
+  <h2>Results</h2>
+  <p id="status"></p>
+  <table id="result">
+    <tr>
+      <th>name</th>
+      <th>mean (ms)</th>
+      <th>repeat</th>
+    </tr>
+  </table>
+</div>
+<div>
+  <h2>Compared Libraries</h2>
+  <ul>
+    <li><a href="https://github.com/likr/emlapack">emlapack</a></li>
+    <li><a href="https://github.com/likr/linalg-asm">linalg-asm</a></li>
+    <li><a href="http://mathjs.org/">mathjs</a></li>
+    <li><a href="https://github.com/scijs/ndarray">ndarray (scijs)</a></li>
+  </ul>
+</div>
+<script src="bundle.js"></script>
+</body>
+</html>
