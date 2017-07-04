@@ -1,4 +1,6 @@
 /* eslint-env worker */
+/* global WebAssembly */
+
 importScripts('https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js')
 importScripts('https://cdnjs.cloudflare.com/ajax/libs/platform/1.3.4/platform.min.js')
 importScripts('https://cdnjs.cloudflare.com/ajax/libs/benchmark/2.1.4/benchmark.min.js')
@@ -6,11 +8,11 @@ importScripts('https://cdnjs.cloudflare.com/ajax/libs/benchmark/2.1.4/benchmark.
 import 'babel-polyfill'
 import wasmModule from 'emlapack/wasm'
 import {runEmlapack} from './emlapack'
-import {runLinalg} from './linalg'
+import {runLinalg, runLinalgWasm} from './linalg'
 import {runMathjs} from './mathjs'
 import {runScijs} from './scijs'
 
-const loadWasm = () => {
+const loadEmlapackWasm = () => {
   return new Promise((resolve, reject) => {
     const intervalID = setInterval(() => {
       if (wasmModule.usingWasm) {
@@ -19,6 +21,21 @@ const loadWasm = () => {
       }
     }, 100)
   })
+}
+
+const loadLinalgWasm = () => {
+  return fetch('./linalg.wasm')
+    .then((response) => response.arrayBuffer())
+    .then((bytes) => WebAssembly.compile(bytes))
+}
+
+const loadWasm = () => {
+  return Promise
+    .all([
+      loadEmlapackWasm(),
+      loadLinalgWasm()
+    ])
+    .then(([_, linalgModule]) => linalgModule)
 }
 
 const sendResult = (results) => {
@@ -36,14 +53,15 @@ onmessage = (e) => {
   const n = e.data[0]
   postMessage({
     type: 'start',
-    cases: 5
+    cases: 6
   })
-  loadWasm().then(() => {
+  loadWasm().then((linalgModule) => {
     sendResult(runEmlapack(true, n))
     sendResult(runEmlapack(false, n))
+    sendResult(runLinalgWasm(linalgModule, n))
     sendResult(runLinalg(n))
-    sendResult(runMathjs(n))
     sendResult(runScijs(n))
+    sendResult(runMathjs(n))
     postMessage({
       type: 'finish'
     })
