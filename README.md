@@ -2,7 +2,7 @@
 
 Matrix multiplication benchmarks for JS.
 
-Live benchmark: https://github.com/likr/matmul-bench
+Live benchmark: https://likr.github.io/matmul-bench/
 
 ## Compared Libraries
 
