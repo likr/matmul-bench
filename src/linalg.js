@@ -17,7 +17,7 @@ export const runLinalg = (n) => {
   }
 
   return new Benchmark.Suite()
-    .add('linalg', () => {
+    .add('linalg-asm', () => {
       linalg.dgemm(0, 0, n, n, n, 1.0, a.byteOffset, n, b.byteOffset, n, 0.0, c.byteOffset, n)
     })
     .run()
